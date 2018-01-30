@@ -1,0 +1,39 @@
+﻿@model bool?
+
+@if (Model.HasValue)
+{
+    string nombre = ViewData.TemplateInfo.GetFullHtmlFieldName("").Split('.').Last();
+    //Html.DropDownList("Tipo", new SelectListItem[] { new SelectListItem() { Text = "Ingreso", Value = "true", Selected = Model.Value },
+    //new SelectListItem() { Text = "Egreso", Value = "false", Selected = !Model.Value } }, new
+    //{
+    //    @class = "form-control",
+    //    name = nombre
+    //});
+    <select class="form-control" name="@nombre">
+        @if (Model.Value)
+        {
+            <option value="true" id="option1" selected="selected">Ingreso</option>
+            <option value="false" id="option2">Egreso</option>
+        }
+        else
+        {
+            <option value="true" id="option1">Ingreso</option>
+            <option value="false" id="option2" selected="selected">Egreso</option>
+        }
+    </select>
+}
+else
+{
+    string nombre = ViewData.TemplateInfo.GetFullHtmlFieldName("").Split('.').Last();
+        @*@Html.DropDownList("", new SelectListItem[] { new SelectListItem() { Text = "Egreso", Value = "false"},
+        new SelectListItem() { Text = "Ingreso", Value = "true" } }, new { @class = "form-control",            
+        });*@
+    <select class="form-control" name="@nombre">
+        <option value="true" id="option1">Ingreso</option>
+        <option value="false" id="option2">Egreso</option>
+    </select>
+}
+
+@*<div class="editor-for">
+    @Html.CheckBox("", true, new { @class = "tickbox-single-line" }) <span>Ingreso</span>
+    </div>*@

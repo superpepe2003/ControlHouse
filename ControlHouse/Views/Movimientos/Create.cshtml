@@ -1,0 +1,168 @@
+﻿@using Mvc.CascadeDropDown
+@model ControlHouse.Models.MovimientosModel
+
+@{
+   @* ViewBag.Title = "Create";*@
+    Layout = null;
+}
+
+<h3 style="text-align:center">Crear Movimiento</h3>
+
+@**@
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-horizontal">
+        <hr />
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.Fecha, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control"} })
+                
+                @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "label label-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tipo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model=>model.Tipo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Tipo, "", new { @class = "label label-danger" })
+            </div>            
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoriaId, "Categoria", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CategoriaId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CategoriaId, "", new { @class = "label label-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SubCategoriaId, "Sub Categoria", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CascadingDropDownListFor(
+                expression: m => m.SubCategoriaId,
+                triggeredByProperty: m => m.CategoriaId,  //Parent property that trigers dropdown data loading
+                url: Url.Action("GetSubCategoria", "Movimientos"),  //Url of action that returns dropdown data
+                ajaxActionParamName: "categoriaid",   //Parameter name for the selected parent value that url action receives
+                disabledWhenParentNotSelected: true, //If true, disables dropdown until parrent dropdown selected
+                htmlAttributes: new { @class = "form-control" })
+
+                @Html.ValidationMessageFor(model => model.SubCategoriaId, "", new { @class = "label label-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.SubCategoriaId, "Sub Categoria AJAX", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("SubCategoriaId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CategoriaId, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+       @* <script>
+            //$(document).ready(function () {
+            //    $("#CategoriaId").change(function () {
+            //        var Seleccion = $(this).val();
+            //        $("#SubCategoriaId").html('');
+            //        $("#SubCategoriaId").append($("<option></option").attr("value", "")
+            //            .text('Select Nombre'));
+            //        if(Seleccion != '')
+            //        {
+            //            $.get('/Movimietos/GetSubCategoria/',
+            //                {
+            //                    "CategoriaId": Seleccion
+            //                }).success(function (data) {
+            //                    $.each(data, function (index, item) {
+            //                        $("#SubCategoriaId").append($("<option></option").attr("value",item.Id)
+            //                            .text(item.Nombre));
+
+            //                    });
+            //                })
+            //        }
+            //    });
+            //})
+
+           $(document).ready(function () {
+
+                //Evento del combo cuando selecciona un item
+                $("#CategoriaId").change(function () {
+                    $("#SubCategoriaId").empty();
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("GetSubCategoria")', // Estamos llamando al método ObtenerSucursals 
+                        // que se encuentra en el controlador y devuelve
+                        //la lista en formato Json
+                        dataType: 'json',
+
+                        //data: { id: $("#CategoriaId").val() },
+                        data: JSON.stringify({ CategoriaId: $("#CategoriaId").val()}), //JSON.stringify({ CategoriaId: $("#CategoriaId").val() }),
+                        contentType: "application/json; charset=utf-8",
+                        // Aqui obtengo el valor del país seleccionado y 
+                        //paso el valor seleccionado al metodo ObtenerSucurdales.
+
+                        success: function (subcates) {
+                            // subcates contiene la lista en formato JSON
+                            // de las subcategorias pasadas por el controlador
+
+                            $.each(subcates, function (i, subcate) {
+                                $("#SubCategoriaId").append('<option value="' + subcate.Value + '">' +
+                                     subcate.Text + '</option>');
+                                // Aquí agrego las subcategorias al combo State
+
+                            });
+                        },
+                        error: function (ex) {
+                            alert('El recibo de sucursales falló.' + ex);
+                        }
+                    });
+                    return false;
+                })
+            });
+        </script>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CuentaId, "Cuenta", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CuentaId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CuentaId, "", new { @class = "label label-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Monto, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Monto, new { htmlAttributes = new { @class = "form-control", id = "Monto", name = "Monto" } })
+                @Html.ValidationMessageFor(model => model.Monto, "", new { @class = "label label-danger" })
+            </div>
+        </div>
+       
+        <div class="form-group">
+            @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "label label-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Grabar" class="btn btn-default" />
+                @Html.ActionLink("Ir al listado", "Index", null, new { @class = "btn btn-info btn-sm", style = "float:right; margin:0 3.75em" })
+            </div>
+        </div>
+    </div>
+}
+
+@Scripts.Render("~/bundles/js")
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@

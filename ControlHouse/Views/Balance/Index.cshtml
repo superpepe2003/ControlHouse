@@ -1,0 +1,16 @@
+﻿@model ControlHouse.Controllers.BalancaViewModel
+
+    <div>
+        <div data-cantidad="@Json.Encode(Model.Cantidad)"/>
+        <div data-meses="@Json.Encode(Model.Meses)"/>
+        <br/>
+        <br/>
+        <a href="#Content-Balance-Futuro">Balance Futuro</a>
+        <div id="Content-Balance-Futuro">
+            @Html.Partial("~/Views/Balance/BalanceFuturo.cshtml", Model)         
+        </div> 
+    </div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/Balancejs")
+}

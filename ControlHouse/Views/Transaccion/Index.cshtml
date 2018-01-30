@@ -1,0 +1,55 @@
+﻿@model ControlHouse.ViewModel.TransaccionesViewModel
+
+@{
+    ViewBag.Title = "Transacciones";
+    WebGrid grid = new WebGrid(rowsPerPage: Model.PersonasPorPagina, ajaxUpdateContainerId: "Contenedor-Grid");
+    grid.Bind(Model.Transaccion, autoSortAndPage: false, rowCount: Model.NumeroDePersonas);
+}
+
+<h2 style="text-align:center">Transacciones</h2>
+<div data-marker="@Json.Encode(Model.filtro)"></div>
+<div class="modal fade" id="myModal" role="dialog">
+<div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header" style="background-color:orange">
+            <button type="button" class="close btn btn-info" data-dismiss="modal">&times;</button>
+            <h3 class="modal-title" style="text-align:center">@ViewBag.Title</h3>
+        </div>
+        <div class="modal-body">
+            <div id="modal-content">
+                Cargando.....
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+@Html.Partial("~/Views/Partial/PartialFiltroMovi.cshtml", Model.filtro, new ViewDataDictionary { { "clave", "Transaccion" } })
+
+<p>
+    <a class="btn btn-success" id="btnNuevo" href="#myModal" data-toggle="modal">Crear Nuevo</a>
+    @*<a class="btn btn-danger" href="/transaccion/Crud">Crea</a>*@
+</p>
+
+<div id="Contenedor-Grid">
+    @grid.GetHtml(tableStyle: "table table-hover gridview", footerStyle: "table-pager", mode: WebGridPagerModes.All,
+                    columns: new[] {
+                        grid.Column("Fecha", format: p=>p.Fecha.ToShortDateString()),
+                        grid.Column("CuentaOrigen.Nombre", header:"Cuenta Origen"),
+                        grid.Column("CuentaDestino.Nombre", header:"Cuenta Destino"),
+                        grid.Column("Monto",style:"text-align:right"),
+                        grid.Column("Descripcion"),
+                        grid.Column("", format: @<text>
+        @Html.DropDown((List<DropDownLists>)ViewBag.Menu, "Acciones",(int)item.Id, "myModal")
+                        </text>)
+        })
+</div>
+
+
+
+@section scripts {
+    @Scripts.Render("~/bundles/Transaccionjs")
+}

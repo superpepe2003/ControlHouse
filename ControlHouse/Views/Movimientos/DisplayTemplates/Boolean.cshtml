@@ -1,0 +1,13 @@
+﻿@model bool?
+
+@if (Model.HasValue)
+{
+    if (Model.Value)
+    {
+        <span class="label label-success" style="font-size:12px">Ingreso</span>
+    }
+    else
+    {
+        <span class="label label-danger" style="font-size:12px">Egreso</span>
+    }
+}

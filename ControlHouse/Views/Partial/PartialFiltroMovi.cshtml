@@ -1,0 +1,64 @@
+﻿@model ControlHouse.Models.FiltroModel
+
+@using (Ajax.BeginForm("Index", (string)ViewBag.clave, null,
+    new AjaxOptions { HttpMethod = "GET", OnSuccess="Devolver"}))
+{
+    <div class="form-inline">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Filtro
+            </div>
+            <div class="panel-body">
+                <div class="form-group" style="margin-right:0.5em">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Filtro, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.Editor("filtro", new { htmlAttributes = new { @class = "form-control", name = "Filtro" } })
+
+                    </div>
+                </div>
+                @*SOLO SE PONE EL TIPO SI ESTAMOS FILTRANDO MOVIMIENTOS*@
+                @if (((string)ViewBag.clave) == "Movimientos")
+                {
+                    <div class="form-group" style="margin-right:0.5em">
+                        <div class="form-group">
+                            @if (Model.Tipo != null)
+                            {<input type="checkbox" id="chkTipo" value="true" style="margin-top:1em">    }
+                            else
+                            {<input type="checkbox" id="chkTipo" value="false" style="margin-top:1em">    }
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Tipo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.EditorFor(model => model.Tipo, new { htmlAtributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="form-group" style="margin-right:0.5em">
+                    <input type="checkbox" id="chkFechas" value="false" style="margin-top:1em">
+                    <label>Fechas</label>
+                    <div class="form-group">
+                        @Html.Label("Inicial", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.FechaInicial, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Final", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.FechaFinal, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="form-group" style="margin-right:0.5em">
+                    <input type="submit" value="Filtrar" class="btn btn-default" style="margin-top:1em" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+<script>
+    function Devolver(result) {
+        //var c = $("<div/>").html(result).find('#Contenedor-Grid').html();
+        var d = $(result).find("#Contenedor-resultados").html();
+        var c = $(result).find('#Contenedor-Grid').html();
+        $('#Contenedor-Grid').html(c);
+        $("#Contenedor-resultados").html(d);
+    }
+</script>

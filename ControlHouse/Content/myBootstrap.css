@@ -1,0 +1,21 @@
+﻿body {
+}
+.navbar-inverse{
+    background-color:orange;
+}
+
+.navbar-inverse .navbar-nav>li>a{
+    color:white;
+}
+
+.navbar-inverse .navbar-nav>li>a:hover, .navbar-inverse .navbar-nav>li>a:focus
+{
+    color:#999;
+}
+
+.navbar-inverse .navbar-brand{
+    color:black;
+    text-align:left;
+    font-size: 2em;
+    font-stretch:extra-expanded;
+}

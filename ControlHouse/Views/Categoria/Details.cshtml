@@ -1,0 +1,42 @@
+﻿@model ControlHouse.Models.CategoriaModel
+
+@{
+    //ViewBag.Title = "Detalles";
+    Layout = null;
+}
+
+<h3 style="text-align:center">Detalles de Categoria</h3>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+    </dl>
+</div>
+
+<table class="table table-condensed">
+    <tr>
+        <th>
+            @Html.DisplayName("Sub Categoria")
+        </th>
+    </tr>
+    @foreach(var Item in Model.SubCategorias)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem=>Item.Nombre)
+            </td>
+        </tr>
+    }
+</table>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn btn-info btn-sm" })
+    @Html.ActionLink("Ir al listado", "Index", null, new { @class = "btn btn-info btn-sm", style = "float:right; margin:0 3.75em" })
+</p>

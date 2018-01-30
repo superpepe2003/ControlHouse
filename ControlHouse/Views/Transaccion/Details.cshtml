@@ -1,0 +1,58 @@
+﻿@model ControlHouse.Models.TransaccionModel
+
+@{
+    //ViewBag.Title = "Details";
+    Layout = null;
+}
+
+<h3 style="text-align:center">Detalle</h3>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CuentaIdOrigen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CuentaIdOrigen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CuentaIdDestino)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CuentaIdDestino)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Monto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Monto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Crud", new { id = Model.Id }, new { @class = "btn btn-info btn-sm" }) 
+    @Html.ActionLink("Ir al Listado", "Index", null, new { @class = "btn btn-info btn-sm", style = "float:right;margin:0 3.75em" })
+</p>

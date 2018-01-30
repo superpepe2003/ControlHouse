@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Control Home</title>
+    <!-- Bootstrap core CSS-->
+    @Styles.Render("~/bundles/css")
+
+    <!-- Bootstrap core JavaScript-->   
+    @Scripts.Render("~/bundles/js") 
+    
+       
+</head>
+@*<body class="fixed-nav sticky-footer bg-dark" id="page-top">*@   
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Control Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav" id="Menu">
+                    <li id="Cuentas">@Html.ActionLink("Cuentas", "Index", "Cuenta")</li>
+                    <li id="Movimientos">@Html.ActionLink("Movimientos", "Index", "Movimientos")</li>
+                    <li id="Categorias">@Html.ActionLink("Categorias", "Index", "Categoria")</li>
+                    @*<li><label>HOLA PEPE</label></li>*@
+                </ul>
+            </div>
+        </div>
+    </div> 
+    <div class="container body-content">
+        <div class="contenido">            
+            @RenderBody()
+            <div data-menu="@Json.Encode(ViewBag.Title)"></div>
+            <!-- /.container-fluid-->
+            <!-- /.content-wrapper-->            
+        </div>        
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fa fa-angle-up"></i>
+        </a>      
+    </div>
+    <footer class="footerclass">
+        <small>Copyright © Utopia Soft 2017</small>
+    </footer>
+    
+    @RenderSection("scripts", required:false)        
+        
+    <script>
+        var menu = $('[data-menu]').data('menu');
+        if (menu != null) {
+            var cId = "#" + menu.replace("\"", "").replace("\"", "");
+            $(cId).addClass("activado").siblings().removeClass();
+        }
+    </script>
+</body>
+</html>

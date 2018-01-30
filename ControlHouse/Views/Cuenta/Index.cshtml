@@ -1,0 +1,84 @@
+﻿@model IEnumerable<ControlHouse.Models.CuentaModel>
+
+@{
+    ViewBag.Title = "Cuentas";
+}
+
+<div>
+    <h2 style="text-align:center">Cuentas</h2>
+    
+</div>
+
+<div class="modal fade" id="myModal" role="dialog">
+    
+    <div class="modal-dialog">
+    
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:orange">
+                <button type="button" class="close btn btn-info" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align:center">@ViewBag.Title</h3>
+            </div>
+            <div class="modal-body">
+                <div id="modal-content">
+                    Cargando.....
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<p>
+    <a class="btn btn-success" href="#myModal" id="btnNuevo" data-toggle="modal">Crear Nuevo</a>
+    <a class="btn btn-info" href="\balance\index" id="btnBalance">Balance</a>
+    <a class="btn btn-info" href="\transaccion\index" id="btnNuevaTransaccion">Transaccion</a>
+    @*@Html.ActionLink("Crear Nueva", "Create", "Cuenta", new { @class = "btn btn-success" })*@
+</p>
+
+@if (ViewBag.Total > 0)
+{
+    <h5 style="float:right; background-color:green; color:white;">Total: @ViewBag.Total</h5>
+}
+else
+{
+    <h5 style="float:right; background-color:red ; color:white;">Total: @ViewBag.Total</h5>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Saldo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Saldo)
+        </td>
+        <td>
+            @Html.DropDown((List<DropDownLists>)ViewBag.Menu, "Acciones", item.Id, "myModal")
+
+            @*@Html.DropDown((List<DropDownLists>)ViewBag.Menu, "Acciones", item.Id)*@
+
+            @*@Html.ActionLink("Editar", "Edit", new { id = item.Id },new { @class = "btn btn-warning",style = "padding:.20rem"})
+            @Html.ActionLink("Detalle", "Details", new { id=item.Id }, new { @class = "btn btn-success", style = "padding:.20rem " }) 
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.Id }, new { @class = "btn btn-danger", style = "padding:.20rem " })*@
+            </td>
+        </tr>
+    }
+
+    </table>
+
+
+@section scripts {
+    @Scripts.Render("~/bundles/Cuentasjs")
+}

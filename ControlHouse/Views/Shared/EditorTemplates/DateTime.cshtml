@@ -1,0 +1,11 @@
+﻿@model DateTime?
+@if (!Model.HasValue)
+{
+    <input type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" 
+           name="@ViewData.TemplateInfo.GetFullHtmlFieldName("").Split('.').Last()" id="@ViewData.TemplateInfo.GetFullHtmlFieldId("").Split('_').Last()" class = "form-control"/>    
+}
+else
+{
+    <input type="date" value="@Model.Value.ToString("yyyy-MM-dd")" 
+           name="@ViewData.TemplateInfo.GetFullHtmlFieldName("").Split('.').Last()" id="@ViewData.TemplateInfo.GetFullHtmlFieldId("").Split('_').Last()" class = "form-control" />
+}

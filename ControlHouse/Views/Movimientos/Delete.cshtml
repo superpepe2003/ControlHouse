@@ -1,0 +1,72 @@
+﻿@model ControlHouse.Models.MovimientosModel
+
+@{
+    //ViewBag.Title = "Eliminar";
+    Layout = null;
+}
+
+<h3 style="text-align:center">Eliminar Movimiento</h3>
+
+<div>
+    <hr />
+    <h4>Seguro desea eliminar el Movimiento?</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Categoria.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Categoria.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cuenta.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cuenta.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubCategoria.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubCategoria.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Monto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Monto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" /> 
+            @Html.ActionLink("Ir al listado", "Index", null, new { @class = "btn btn-info btn-sm", style = "float:right; margin:0 3.75em" })
+        </div>
+    }
+</div>

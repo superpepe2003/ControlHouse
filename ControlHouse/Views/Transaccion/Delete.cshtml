@@ -1,0 +1,80 @@
+﻿@model ControlHouse.Models.TransaccionModel
+
+@{
+    //ViewBag.Title = "Delete";
+    Layout = null;
+}
+
+<h3 style="text-align:center">Borrar</h3>
+
+@if (ViewBag.CuentaDestino)
+{
+    <h4><span class="label label-warning">Confirma eliminar?, con ellos se actualizaran los saldos de las cuentas</span></h4>
+}
+else
+{
+    <h4><span class="label label-warning">La cuenta destino ya no tiene los fondos</span></h4>
+}
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CuentaIdOrigen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CuentaIdOrigen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CuentaIdDestino)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CuentaIdDestino)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Monto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Monto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">            
+            @if (ViewBag.CuentaDestino)
+            {
+                <input type="submit" value="Eliminar" class="btn btn-default" />
+                @Html.ActionLink("Ir al Listado", "Index", null, new { @class = "btn btn-info btn-sm", style = "float:right;margin:0 3.75em" })
+            }
+            else
+            {                
+                <input type="submit" value="Ir al Listado" class="btn btn-info btn-sm", style = "float:right;margin:0 3.75em" />
+            }
+                
+        </div>
+    }
+</div>

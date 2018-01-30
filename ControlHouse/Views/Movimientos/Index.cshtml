@@ -1,0 +1,82 @@
+﻿@*@using ControlHouse.Helpers*@
+@*@model IEnumerable<ControlHouse.Models.MovimientosModel>*@
+
+@using System.Web.Mvc
+
+@model ControlHouse.ViewModel.MovimientosViewModel
+
+@{
+    ViewBag.Title = "Movimientos";
+    //WebGrid grid = new WebGrid(Model.Movimientos);
+    WebGrid grid = new WebGrid(rowsPerPage: Model.PersonasPorPagina,ajaxUpdateContainerId: "Contenedor-Grid");
+    grid.Bind(Model.Movimientos, autoSortAndPage: false, rowCount: Model.NumeroDePersonas);
+
+}
+
+<div style="margin:auto">
+    
+    <div data-marker="@Json.Encode(Model.filtro)"></div>
+    <h2 style="text-align:center">Movimientos</h2>
+
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:orange">
+                    <button type="button" class="close btn btn-info" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title" style="text-align:center">@ViewBag.Title</h3>
+                </div>
+                <div class="modal-body">
+                    <div id="modal-content">
+                        Cargando.....
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    @Html.Partial("~/Views/Partial/PartialFiltroMovi.cshtml", Model.filtro, new ViewDataDictionary { { "clave", "Movimientos" } })    
+
+    <hr />
+    <p>
+        <a class="btn btn-success" href="#myModal" id="btnNuevo" data-toggle="modal">Crear Nuevo</a>        
+        @*@Html.ActionLink("Crear Nuevo", "Crud","Movimientos", new { @class = "btn btn-success" })*@
+    </p>
+    
+    <div id="Contenedor-Grid">
+        @grid.GetHtml(tableStyle: "table table-hover gridview", footerStyle: "table-pager", mode: WebGridPagerModes.All,
+                    columns: new[] {
+                        grid.Column("Fecha", format: p=>p.Fecha.ToShortDateString()),
+                        grid.Column("Tipo", format: @<text>@(item.Tipo ? "Ingreso" : "Egreso")</text>),
+                        grid.Column("Categoria.Nombre", header:"Categoria"),
+                        grid.Column("SubCategoria.Nombre", header:"Sub Categoria"),
+                        grid.Column("Cuenta.Nombre",header:"Cuenta"),
+                        grid.Column("Monto",style:"text-align:right"),
+                        grid.Column("Descripcion"),
+                        grid.Column("", format: @<text>
+                            @Html.DropDown((List<DropDownLists>)ViewBag.Menu, "Acciones", (int)item.Id, "myModal")                                        
+                        </text>)
+        })
+    </div>
+    <div id="Contenedor-resultados">
+        <table class="table" float="right">
+            <thead>
+                <tr><th>Ingreso</th><th>Egreso</th><th>Total</th></tr>                
+            </thead>
+            <tbody>
+                <tr><th>@Model.valores["ingreso"]</th><th>@Model.valores["egreso"]</th><th>@(Model.valores["ingreso"]-Model.valores["egreso"])</th></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section scripts {
+    @Scripts.Render("~/bundles/Movimientosjs")
+}
+
+@*<a class="btnMovimientosEdit" href="#myModal" data-toggle="modal" data-target="#myModal" data-id= "@item.Id">Mod</a> |
+    <a class="btnMovimientosDetails" href="#myModal" data-toggle="modal" data-target="#myModal" data-id= "@item.Id">Det</a> |
+    <a class="btnMovimientosDelete" href="#myModal" data-toggle="modal" data-target="#myModal" data-id= "@item.Id">Eli</a>*@

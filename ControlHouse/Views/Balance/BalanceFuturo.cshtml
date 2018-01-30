@@ -1,0 +1,184 @@
+﻿@model ControlHouse.Controllers.BalancaViewModel
+
+@{
+    var Ingreso = "Ingreso";
+    var Egreso = "Egreso";
+
+}
+
+<table class="display" id="tbBalance">
+    <thead>
+        @*CREO LA FILA DE TITULOS DE LOS MESES*@
+        <tr class="mia-inverse">
+            <th>Categorias</th>
+            @foreach (string m in Model.Meses)
+            {
+                <th>@m</th>
+            }
+        </tr>
+    </thead>
+    <tfoot>
+        <tr class="mia-inverse">
+            @*MESES Y TOTALES CALCULADOS EN BASE A LOS INGRESOS - LOS EGRESOS*@
+            <td>Totales</td>
+            @foreach (string m in Model.Meses)
+            {
+                <td>@m</td>
+            }
+        </tr>
+    </tfoot>
+
+    @*INGRESOOOOOOOOOOOOOOOOOOOOOOOO*@
+    <tr>
+        <td colspan="13" style="text-align:center; font-size:2em; background-color:orange; color:white">Ingresos</td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+    </tr>
+    @{
+        var j = 0;
+        //CREO DE CADA SUBCATEGORIA DE INGRESO PASADA LA FILA ENTERA POR LOS MESES PASADOS
+        foreach (var sc in Model.SubCategoriaIngreso)
+        {
+            <tr>
+                <td>@Html.DisplayFor(model => sc.Nombre)</td>
+                @foreach (string m in Model.Meses)
+                {
+                    <td><input type="text" id="@(Ingreso + m + j)" style="width:8em;" class="form-control" placeholder="@sc.Monto" /></td>
+                }
+            </tr>
+            j += 1;
+        }
+        //CREO 3 CAJAS MAS DE INGRESO MENSUALES POR TODOS LOS MESES PASADOS
+        for (var i = 0; i < 3; i++)
+        {
+            <tr>
+                <td><input type="text" style="width:18em;" class="form-control" /></td>
+                @foreach (string m in Model.Meses)
+                {
+                    <td><input type="text" id="@(Ingreso + m + j)" style="width:8em;" class="form-control" placeholder="0" /></td>
+                }
+            </tr>
+            j += 1;
+        }
+
+        @*CREO LOS LABELS DE LOS TOTALES PARA SUMAR LAS SUBCATEGORIAS Y LOS CAMPOS VACIOS DE CADA MES*@
+        <tr class="mia-inverse">
+
+            <td><label>Totales</label></td>
+            @foreach (string m in Model.Meses)
+            {
+                <td><label id="@(Ingreso + m )" class="control-label">0</label></td>
+            }
+        </tr>
+    }
+
+    @*EGRESOOOOOOOOOOOO*@
+    <tr>
+        <td colspan="13" style="text-align:center; font-size:2em; background-color:orange; color:white">Egresos</td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+    </tr>
+    @{
+        j = 0;
+        foreach (var sc in Model.SubCategoriaEgreso)
+        {
+            //POR CADA SUBCATEGORIA DE EGRESO RELLENO TODOS LOS MESES PASADOS
+            <tr>
+                <td>@Html.DisplayFor(model => sc.Nombre)</td>
+                @foreach (string m in Model.Meses)
+                {
+                    <td><input type="text" id="@(Egreso + m + j)" style="width:8em;" class="form-control" placeholder="@sc.Monto" /></td>
+                }
+            </tr>
+            j += 1;
+        }
+        for (var i = 0; i < 3; i++)
+        {
+            //CREO 3 CAJAS VACIAS POR TODOS LOS MESES PASADOS
+            <tr>
+                <td><input type="text" style="width:18em;" class="form-control" /></td>
+                @foreach (string m in Model.Meses)
+                {
+                    <td><input type="text" id="@(Egreso + m + j)" style="width:8em;" class="form-control" placeholder="0" /></td>
+                }
+            </tr>
+            j += 1;
+        }
+        <tr class="mia-inverse">
+            @*CREO LOS LABELS DE LOS TOTALES PARA SUMAR LAS SUBCATEGORIAS Y LOS CAMPOS VACIOS DE CADA MES*@
+            <td><label>Totales</label></td>
+            @foreach (string m in Model.Meses)
+            {
+                <td><label id="@(Egreso + m )" class="control-label">0</label></td>
+            }
+        </tr>
+    }
+
+    @*TOTALESSSSSSSSS*@
+    <tr>
+        <td colspan="13" style="text-align:center; font-size:2em; background-color:orange; color:white">Resumen Totales</td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+        <td style="display:none"></td>
+    </tr>
+
+    <tr>
+        <td>Ingreso</td>
+        @foreach (string m in Model.Meses)
+        {
+            <td><label id="@(Ingreso + "resumen" + m )" class="control-label" style="font-weight:100;">0</label></td>
+        }
+    </tr>
+    <tr>
+        <td>Egreso</td>
+        @foreach (string m in Model.Meses)
+        {
+            <td><label id="@(Egreso + "resumen" + m )" class="control-label" style="font-weight:100;">0</label></td>
+        }
+    </tr>
+    <tr>
+        <td>Total</td>
+        @foreach (string m in Model.Meses)
+        {
+            <td><label id="@("Total" + m )">0</label></td>
+        }
+    </tr>
+    <tr class="mia-inverse">
+        <td><span>Acumulado:     </span><label id="@("TotalAcumulado")" class="control-label">@Model.MontoTotal</label></td>
+        @foreach (string m in Model.Meses)
+        {
+            <td><label id="@("TotalAcumulado" + m )" class="control-label">0</label></td>
+        }
+    </tr>
+
+</table>
+
