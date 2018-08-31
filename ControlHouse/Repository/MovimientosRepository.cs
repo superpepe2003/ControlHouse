@@ -17,23 +17,41 @@ namespace ControlHouse.Repository
             { 
                 CuentasRepository RepoCuentas = new CuentasRepository();
                 CuentaModel _cuentaAnterior = RepoCuentas.Devolver(CuentaAnteriorId);
-                CuentaModel _cuentaActual = RepoCuentas.Devolver(datos.CuentaId);
-                
-                if (TipoAnterior)
-                {
-                    RepoCuentas.MovimientosCuenta(_cuentaAnterior, null, MontoAnterior);
-                    if (!datos.Tipo.Value)
-                        RepoCuentas.MovimientosCuenta(_cuentaActual, null, datos.Monto);
-                    else
-                        RepoCuentas.MovimientosCuenta(null, _cuentaActual, datos.Monto);
-                }
+                CuentaModel _cuentaActual;
+                if (CuentaAnteriorId == datos.CuentaId)
+                    _cuentaActual = _cuentaAnterior;
                 else
+                    _cuentaActual = RepoCuentas.Devolver(datos.CuentaId);
+
+                //if (TipoAnterior)
+                //{
+                //    RepoCuentas.MovimientosCuenta(_cuentaAnterior, null, MontoAnterior);
+                //    if (!datos.Tipo.Value)
+                //        RepoCuentas.MovimientosCuenta(_cuentaActual, null, datos.Monto);
+                //    else
+                //        RepoCuentas.MovimientosCuenta(null, _cuentaActual, datos.Monto);
+                //}
+                //else
+                //{
+                //    RepoCuentas.MovimientosCuenta(null, _cuentaAnterior, MontoAnterior);
+                //    if (!datos.Tipo.Value)
+                //        RepoCuentas.MovimientosCuenta(_cuentaActual, null, datos.Monto);
+                //    else
+                //        RepoCuentas.MovimientosCuenta(null, _cuentaActual, datos.Monto);
+                //}
+               
+                if ((TipoAnterior != datos.Tipo) || (CuentaAnteriorId != datos.CuentaId) || (MontoAnterior != datos.Monto))
                 {
-                    RepoCuentas.MovimientosCuenta(null, _cuentaAnterior, MontoAnterior);
-                    if (!datos.Tipo.Value)
-                        RepoCuentas.MovimientosCuenta(_cuentaActual, null, datos.Monto);
+                    if(datos.CuentaId==CuentaAnteriorId)
+                    if (TipoAnterior)
+                        RepoCuentas.MovimientosCuenta(_cuentaAnterior, null, MontoAnterior);
                     else
+                        RepoCuentas.MovimientosCuenta(null, _cuentaAnterior, MontoAnterior);
+
+                    if (datos.Tipo.Value)
                         RepoCuentas.MovimientosCuenta(null, _cuentaActual, datos.Monto);
+                    else
+                        RepoCuentas.MovimientosCuenta(_cuentaActual, null, datos.Monto);
                 }
 
                 c.Entry(datos).State = EntityState.Modified;
@@ -49,9 +67,7 @@ namespace ControlHouse.Repository
                     _cuentaAnterior.Movimientos = null;
                     c.Entry(_cuentaActual).State = EntityState.Modified;
                     c.Entry(_cuentaAnterior).State = EntityState.Modified;
-                }
-
-
+                }                
 
                 c.SaveChanges();
             }
@@ -187,6 +203,7 @@ namespace ControlHouse.Repository
                                        c.SubCategoria.Nombre.Contains(filtro.Filtro) ||
                                        c.Cuenta.Nombre.Contains(filtro.Filtro) ||
                                        c.Monto.ToString().Contains(filtro.Filtro) ||
+                                       c.HashTag.ToString().Contains(filtro.Filtro) ||
                                        c.Descripcion.Contains(filtro.Filtro));
             return query;                                    
         }

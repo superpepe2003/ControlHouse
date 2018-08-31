@@ -151,6 +151,7 @@ namespace ControlHouse.Controllers
 
         //VERIFICAR SI ES INGRESO O EGRESO EN LAS ALTAS DE MOVIMIENTOS DE LAS CUENTAS
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Guardar(MovimientosModel movimientoModel)
         {
             if (ModelState.IsValid)
@@ -183,74 +184,6 @@ namespace ControlHouse.Controllers
             ViewBag.SubCategoriaId = new SelectList(subcatdb.Listar(), "Id", "Nombre", movimientoModel.SubCategoriaId);
             return RedirectToAction("Crud", "Movimientos", movimientoModel);
         }
-
-        // GET: Movimientos/Create
-        public ActionResult Create()
-        {
-            ViewBag.CategoriaId = new SelectList(catdb.Listar(), "Id", "Nombre");
-            ViewBag.CuentaId = new SelectList(cuentaDB.Listar(), "Id", "Nombre");
-            ViewBag.SubCategoriaId = new SelectList(subcatdb.Listar(), "Id", "Nombre");
-            ViewBag.Fecha = DateTime.Now;
-            return View();
-        }
-
-        // POST: Movimientos/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Fecha,CategoriaId,SubCategoriaId,CuentaId,Monto,Hora,Tipo,Descripcion")] MovimientosModel movimientosModel)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Grabar(movimientosModel);       
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.CategoriaId = new SelectList(catdb.Listar(), "Id", "Nombre", movimientosModel.CategoriaId);
-            ViewBag.CuentaId = new SelectList(cuentaDB.Listar(), "Id", "Nombre", movimientosModel.CuentaId);
-            ViewBag.SubCategoriaId = new SelectList(subcatdb.Listar(), "Id", "Nombre", movimientosModel.SubCategoriaId);
-            return View(movimientosModel);
-        }
-
-        // GET: Movimientos/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MovimientosModel movimientosModel = db.Devolver(id);
-            if (movimientosModel == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.CategoriaId = new SelectList(catdb.Listar(), "Id", "Nombre", movimientosModel.CategoriaId);
-            ViewBag.CuentaId = new SelectList(cuentaDB.Listar(), "Id", "Nombre", movimientosModel.CuentaId);
-            ViewBag.SubCategoriaId = new SelectList(subcatdb.Listar(), "Id", "Nombre", movimientosModel.SubCategoriaId);
-            _montoEdicion = movimientosModel.Monto;
-            return View(movimientosModel);
-        }
-
-        // POST: Movimientos/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "Id,Fecha,CategoriaId,SubCategoriaId,CuentaId,Monto,Hora,Descripcion")] MovimientosModel movimientosModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _montoEdicion-= movimientosModel.Monto;
-        //        db.Actualizar(movimientosModel,_montoEdicion);
-        //        _montoEdicion = 0;
-        //        return RedirectToAction("Index");
-        //    }
-        //    ViewBag.CategoriaId = new SelectList(catdb.Listar(), "Id", "Nombre", movimientosModel.CategoriaId);
-        //    ViewBag.CuentaId = new SelectList(cuentaDB.Listar(), "Id", "Nombre", movimientosModel.CuentaId);
-        //    ViewBag.SubCategoriaId = new SelectList(subcatdb.Listar(), "Id", "Nombre", movimientosModel.SubCategoriaId);
-        //    return View(movimientosModel);
-        //}
 
         // GET: Movimientos/Delete/5
         public ActionResult Delete(int? id)

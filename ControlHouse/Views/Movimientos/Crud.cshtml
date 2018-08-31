@@ -144,6 +144,14 @@ Layout = null;
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model=>model.HashTag, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.HashTag, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.ValidationMessageFor(model=>model.HashTag, "", new { @class= "label label-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
@@ -159,6 +167,46 @@ Layout = null;
         </div>
     </div>
 }
+
+<script>
+    $(document).ready(function () {
+        $("#HashTag").on({
+            "keyup": function (e) {
+                //console.log(e.key);
+                $(this).val($(this).val().toUpperCase());
+                if (e.which === 32) {
+                    var valor = $(this).val();
+                    var valor = $.trim(valor);
+                    if (valor != "") {
+                        valor = ponerHash(valor) + " ";
+                        $(this).val(valor);
+                    }
+                }
+            },
+            "blur": function (e) {
+                $(this).val($(this).val().toUpperCase());
+
+                var valor = $(this).val();
+                var valor = $.trim(valor);
+                if (valor != "") {
+                    valor = ponerHash(valor) + " ";
+                    $(this).val(valor);
+                }
+            }
+        });
+
+        function ponerHash(texto) {
+            var res = texto.split(" ");
+            var resultado = "";
+            $.each(res, function (index, value) {
+                if (value[0] != "#")
+                    value = "#" + value;
+                resultado = resultado + value;
+            });
+            return resultado;
+        }
+    });
+</script>
 
 @Scripts.Render("~/bundles/js")
 

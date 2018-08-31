@@ -159,8 +159,9 @@ box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
  }
 
  input[type="text"]{
-     height:2em;
+     height:2em;     
  }
+
 
  tr.mia-inverse{
      background-color:#f5f5f5;

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<ControlHouse.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "About";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<div class="modal fade" id="myModal" role="dialog">
+
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:orange">
+                <button type="button" class="close btn btn-info" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align:center">@ViewBag.Title</h3>
+            </div>
+            <div class="modal-body">
+                <div id="modal-content">
+                    Cargando.....
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<p>
+    <a class="btn btn-success" href="#myModal" id="btnNuevo" data-toggle="modal">Crear Nuevo</a>
+    <a class="btn btn-info" href="\balance\index" id="btnBalance">Balance</a>
+    <a class="btn btn-info" href="\transaccion\index" id="btnNuevaTransaccion">Transaccion</a>
+    @*@Html.ActionLink("Crear Nueva", "Create", "Cuenta", new { @class = "btn btn-success" })*@
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Roles)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.PasswordHash)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Roles.
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.PasswordHash)
+            </td>
+            <td>
+                @Html.DropDown((List<DropDownLists>)ViewBag.Menu, "Acciones", item.Id, "myModal")               
+            </td>
+        </tr>
+    }
+</table>
+
+@section scripts {
+    @Scripts.Render("~/bundles/Usuarios")
+}
+
+

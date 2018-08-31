@@ -12,6 +12,7 @@ using ControlHouse.Helpers;
 
 namespace ControlHouse.Controllers
 {
+    //[Authorize]
     public class CuentaController : Controller
     {
         private CuentasRepository _repository = new CuentasRepository();

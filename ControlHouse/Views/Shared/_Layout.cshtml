@@ -32,8 +32,10 @@
                     <li id="Cuentas">@Html.ActionLink("Cuentas", "Index", "Cuenta")</li>
                     <li id="Movimientos">@Html.ActionLink("Movimientos", "Index", "Movimientos")</li>
                     <li id="Categorias">@Html.ActionLink("Categorias", "Index", "Categoria")</li>
+                    <li id="Administrador">@Html.ActionLink("Administrador", "Lista", "Manage")</li>
                     @*<li><label>HOLA PEPE</label></li>*@
-                </ul>
+                </ul>   
+                @Html.Partial("_LoginPartial")            
             </div>
         </div>
     </div> 

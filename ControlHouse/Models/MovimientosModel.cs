@@ -36,13 +36,18 @@ namespace ControlHouse.Models
         public CuentaModel Cuenta { get; set; }
         [Display(Name = "Cuenta")]
         [Required]
+        [Remote("TieneMonto", "Movimientos", AdditionalFields = "Id,CuentaId, Tipo", ErrorMessage = "No hay monto en la Cuenta")]
         public int CuentaId { get; set;}
 
         [Required]
         //[Remote("TieneMonto", "Movimientos", AdditionalFields = "Id,CuentaId,Tipo",ErrorMessage = "No Hay monto suficiente REMOTO MOVIMIENTOS")]
-        [Remote("TieneMonto", "Movimientos", AdditionalFields = "Id,CuentaId, Tipo", ErrorMessage = "NO HAY MONTO CHE")]
+        [Remote("TieneMonto", "Movimientos", AdditionalFields = "Id,CuentaId, Tipo", ErrorMessage = "No hay monto en la Cuenta")]
         public double Monto { get; set; }
 
+        [DataType(DataType.MultilineText)]
+        public string HashTag { get; set; }
+
+        [DataType(DataType.MultilineText)]
         public string Descripcion { get; set; }
 
         //1 es un ingreso 0 es un egreso
